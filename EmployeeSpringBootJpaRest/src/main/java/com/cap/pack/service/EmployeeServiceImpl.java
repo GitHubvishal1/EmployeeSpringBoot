@@ -8,10 +8,12 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cap.pack.entity.Employee;
+import com.cap.pack.exception.GlobalException;
 import com.cap.pack.repository.EmployeeDaoInterface;
 
 /**
@@ -46,14 +48,18 @@ public class EmployeeServiceImpl implements EmployeeServiceInterface {
 	}
 
 	public List<Employee> getBatch() {
+		
 		System.out.println("Enter the batch Name A or B");
 		Scanner myObj = new Scanner(System.in);
 		String batchName = myObj.nextLine();
-		return dao.getBatch(batchName);
+		return dao.getBatch(batchName);			
 	}
 
 	@Override
 	public List<Employee> getId(int i, int j) {
+		if(i<1||j<1){
+		throw new GlobalException("Enter valid Id's");
+		}
 		return dao.getId(i, j);
 	}
 
